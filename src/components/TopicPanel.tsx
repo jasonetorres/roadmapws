@@ -64,22 +64,15 @@ export function TopicPanel({
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-[520px] flex flex-col outline-none overflow-hidden"
-        style={{
-          background: 'rgba(248,250,252,0.88)',
-          backdropFilter: 'blur(32px)',
-          WebkitBackdropFilter: 'blur(32px)',
-          borderLeft: '1px solid rgba(255,255,255,0.7)',
-          boxShadow: '-4px 0 48px rgba(0,0,0,0.12), -1px 0 0 rgba(255,255,255,0.5)',
-        }}
+        className="fixed bottom-0 right-0 top-0 z-50 flex w-full max-w-[540px] flex-col overflow-hidden border-l border-slate-200 bg-white shadow-2xl outline-none"
       >
         {/* Top bar */}
-        <div className="shrink-0 border-b border-slate-100 px-5 py-3 flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2 border-b border-slate-200 px-5 py-3">
           {/* Tabs */}
           <div className="flex items-center gap-1 flex-1">
             <button
               onClick={() => setTab('learn')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                 tab === 'learn'
                   ? 'bg-slate-900 text-white'
                   : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
@@ -90,7 +83,7 @@ export function TopicPanel({
             </button>
             <button
               onClick={() => setTab('resources')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                 tab === 'resources'
                   ? 'bg-slate-900 text-white'
                   : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
@@ -105,14 +98,14 @@ export function TopicPanel({
           <div className="relative">
             <button
               onClick={() => setStatusOpen(p => !p)}
-              className={`flex items-center gap-1.5 pl-2.5 pr-2 py-1.5 rounded-full border text-xs font-medium transition-colors ${current.color} border-slate-200 bg-white hover:bg-slate-50`}
+              className={`flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white py-1.5 pl-2.5 pr-2 text-xs font-medium transition-colors hover:bg-slate-50 ${current.color}`}
             >
               {current.icon}
               {current.label}
               <ChevronDown size={11} className="text-slate-400" />
             </button>
             {statusOpen && (
-              <div className="absolute right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-10 w-40">
+              <div className="absolute right-0 top-full z-10 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl">
                 {statusOptions.map(opt => (
                   <button
                     key={opt.value}
@@ -132,28 +125,28 @@ export function TopicPanel({
           {/* Close */}
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
           >
             <X size={16} />
           </button>
         </div>
 
         {/* Title */}
-        <div className="shrink-0 px-6 pt-5 pb-4 border-b border-slate-100">
+        <div className="shrink-0 border-b border-slate-200 bg-slate-50 px-6 pb-4 pt-5">
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             <span
-              className="text-xs font-semibold px-2.5 py-1 rounded-full"
+              className="rounded-full px-2.5 py-1 text-xs font-semibold"
               style={{ color: accentColor, background: `${accentColor}15` }}
             >
               {sectionTitle}
             </span>
             {isOptional && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-400 border border-slate-200">
+              <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-xs text-slate-500">
                 optional
               </span>
             )}
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 leading-tight">{label}</h2>
+          <h2 className="text-2xl font-bold leading-tight text-slate-950">{label}</h2>
         </div>
 
         {/* Body */}
@@ -161,16 +154,16 @@ export function TopicPanel({
           {tab === 'learn' && data && (
             <div className="px-6 py-5 space-y-6">
               {/* Overview */}
-              <p className="text-slate-500 text-sm leading-relaxed">{data.overview}</p>
+              <p className="text-sm leading-7 text-slate-600">{data.overview}</p>
 
               {/* Sections */}
               {data.sections.map((section) => (
                 <div key={section.heading}>
-                  <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-2">
+                  <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <ChevronRight size={14} style={{ color: accentColor }} />
                     {section.heading}
                   </h3>
-                  <p className="text-sm text-slate-500 leading-relaxed pl-5 whitespace-pre-line">{section.body}</p>
+                  <p className="whitespace-pre-line pl-5 text-sm leading-7 text-slate-600">{section.body}</p>
                 </div>
               ))}
 
@@ -186,12 +179,12 @@ export function TopicPanel({
                       <div key={sc.keys} className="flex items-center gap-3 flex-wrap">
                         <div className="flex items-center gap-1 shrink-0">
                           {sc.keys.split(' / ').map((k) => (
-                            <span key={k} className="px-2 py-0.5 text-xs font-mono font-semibold rounded-md border border-slate-200 bg-slate-50 text-slate-700 shadow-sm">
+                            <span key={k} className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-xs font-semibold text-slate-700 shadow-sm">
                               {k}
                             </span>
                           ))}
                         </div>
-                        <span className="text-xs text-slate-500">{sc.description}</span>
+                        <span className="text-xs text-slate-600">{sc.description}</span>
                       </div>
                     ))}
                   </div>
@@ -213,7 +206,7 @@ export function TopicPanel({
                   {/* Free Resources section */}
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full whitespace-nowrap">
+                      <span className="whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
                         Free Resources
                       </span>
                       <div className="flex-1 h-px bg-emerald-100" />
@@ -225,10 +218,10 @@ export function TopicPanel({
                           href={res.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-3 group"
+                          className="group flex items-center gap-3 rounded-lg border border-transparent px-2 py-2 transition hover:border-slate-200 hover:bg-slate-50"
                         >
                           <span
-                            className="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded uppercase tracking-wide"
+                            className="shrink-0 rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
                             style={{
                               background: res.type === 'docs' ? '#dbeafe' : res.type === 'video' ? '#fce7f3' : '#fef9c3',
                               color: res.type === 'docs' ? '#1d4ed8' : res.type === 'video' ? '#9d174d' : '#92400e',
@@ -236,7 +229,7 @@ export function TopicPanel({
                           >
                             {res.type}
                           </span>
-                          <span className="text-sm text-slate-700 group-hover:text-blue-600 group-hover:underline underline-offset-2 flex items-center gap-1.5">
+                          <span className="flex items-center gap-1.5 text-sm text-slate-700 underline-offset-2 group-hover:text-blue-600 group-hover:underline">
                             {res.title}
                             <ExternalLink size={11} className="opacity-0 group-hover:opacity-60 shrink-0" />
                           </span>

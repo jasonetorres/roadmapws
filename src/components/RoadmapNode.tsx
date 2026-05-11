@@ -17,32 +17,32 @@ const StatusIcon = ({ status }: { status: NodeStatus }) => {
   return <Circle size={12} className="text-slate-300 shrink-0" />;
 };
 
-const statusBase = 'group flex items-center gap-2 px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all duration-150 cursor-pointer w-full';
+const statusBase = 'group flex min-h-10 w-full cursor-pointer items-center gap-2 rounded-md border-2 px-3 py-2 text-left text-sm font-bold transition-all duration-150 focus:outline-none focus:ring-4';
 
-const statusStyles: Record<NodeStatus, { background: string; border: string; color: string; shadow: string }> = {
+const statusStyles: Record<NodeStatus, { background: string; border: string; color: string; ring: string }> = {
   default: {
-    background: 'rgba(255,255,255,0.45)',
-    border: '1px solid rgba(255,255,255,0.75)',
-    color: '#334155',
-    shadow: '0 1px 4px rgba(0,0,0,0.06)',
+    background: '#ffffff',
+    border: '#0f172a',
+    color: '#0f172a',
+    ring: 'focus:ring-yellow-200',
   },
   done: {
-    background: 'rgba(209,250,229,0.5)',
-    border: '1px solid rgba(110,231,183,0.6)',
-    color: '#065f46',
-    shadow: '0 1px 4px rgba(16,185,129,0.1)',
+    background: '#d1fae5',
+    border: '#0f172a',
+    color: '#064e3b',
+    ring: 'focus:ring-emerald-100',
   },
   'in-progress': {
-    background: 'rgba(254,243,199,0.5)',
-    border: '1px solid rgba(252,211,77,0.6)',
-    color: '#92400e',
-    shadow: '0 1px 4px rgba(245,158,11,0.1)',
+    background: '#fde68a',
+    border: '#0f172a',
+    color: '#78350f',
+    ring: 'focus:ring-amber-100',
   },
   skipped: {
-    background: 'rgba(241,245,249,0.35)',
-    border: '1px solid rgba(226,232,240,0.5)',
-    color: '#94a3b8',
-    shadow: 'none',
+    background: '#e2e8f0',
+    border: '#334155',
+    color: '#475569',
+    ring: 'focus:ring-slate-100',
   },
 };
 
@@ -52,33 +52,17 @@ export function RoadmapNode({ id, label, status, isOptional, onClick }: RoadmapN
   return (
     <button
       onClick={() => onClick(id)}
-      className={`${statusBase} ${status === 'skipped' ? 'line-through' : ''}`}
+      className={`${statusBase} ${s.ring} ${status === 'skipped' ? 'line-through' : ''} shadow-[2px_2px_0_#0f172a] hover:-translate-y-0.5`}
       style={{
         background: s.background,
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        border: s.border,
+        borderColor: s.border,
         color: s.color,
-        boxShadow: s.shadow,
-      }}
-      onMouseEnter={e => {
-        if (status === 'default') {
-          (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.7)';
-          (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)';
-        }
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLElement).style.background = s.background;
-        (e.currentTarget as HTMLElement).style.boxShadow = s.shadow;
       }}
     >
       <StatusIcon status={status} />
-      <span className="leading-snug flex-1 min-w-0">{label}</span>
+      <span className="min-w-0 flex-1 leading-snug">{label}</span>
       {isOptional && (
-        <span
-          className="shrink-0 text-[10px] font-normal px-1.5 py-0.5 rounded-md"
-          style={{ background: 'rgba(0,0,0,0.06)', color: '#94a3b8' }}
-        >
+        <span className="shrink-0 rounded border border-slate-900 bg-slate-100 px-1.5 py-0.5 text-[10px] font-black uppercase text-slate-600">
           opt
         </span>
       )}
